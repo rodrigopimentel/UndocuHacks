@@ -1,33 +1,41 @@
-# MeanMapAppV2.0
-Basic application demonstrating MEAN (Mongo, Express, Angular, and Node) Integration with Google Maps. Application allows users to add themselves onto a Google Map map with identifying markers based on their form response. The application also demonstrates the use of HTML5 validated geolocation and the use of geospatial filtering through MongoDB. 
+# Undocuhacks CBP/ICE Activity Map
 
-![appimage](https://raw.githubusercontent.com/afhaque/MeanMapAppV2.0/master/Resources/AppImage.png)
+Application that crowdsources user reports on possible immigration enforcement activity, displaying the data on a map using the Google Maps API.
 
-## Demo Link
+## Build Instructions
 
-https://mean-google-maps.herokuapp.com/#/join
+### Clone Repository
 
-## Full Tutorial
-Part I
-https://scotch.io/tutorials/making-mean-apps-with-google-maps-part-i
- 
-Part II
-https://scotch.io/tutorials/making-mean-apps-with-google-maps-part-ii
- 
-## Instructions to run locally 
+  git clone https://github.com/madebycris/UndocuHacks
 
-1) Clone repository and download npm packages 
+### Install dependencies
 
-```
-git clone https://github.com/afhaque/MeanMapAppV2.0.git
-npm install
-```
+#### MongoDB Install
 
-2) Launch mongod in one terminal then run server.js
+First, import the key of the official MongoDB repository.
 
-````
-mongod
-node server.js
-````
+  sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
 
-3) Open browser `http://localhost:3000/`
+Add the MongoDB repository
+
+  echo "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+
+#### Install nodejs-legacy and npm
+
+  sudo apt-get install npm nodejs-legacy
+
+## Download npm packages
+
+Run the following in the directory of the cloned repository
+
+  npm install
+
+## Start it up!
+
+1) Launch MongoDB
+  mongod
+
+2) Run server.js
+  node server.js
+
+3) Navigate to 'http://localhost:30000/'
