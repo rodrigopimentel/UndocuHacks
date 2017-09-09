@@ -32,12 +32,19 @@
                 <div class="radio" required>
                     <label>
                         <input type="radio" name="checkpointRadio" id="checkpoint" value="checkpoint" ng-model="formData.incident">
-                        Checkpoint Stop
                     </label>
                 </div>
                 <div class="form-group">
+                    <!-- <label for="numOfAgents">Number of Agents</label>
+                    <input type="number" class="form-control" id="numOfAgents" placeholder="3" ng-model="formData.numOfAgents" required> -->
                     <label for="numOfAgents">Number of Agents</label>
-                    <input type="number" class="form-control" id="numOfAgents" placeholder="3" ng-model="formData.numOfAgents" required>
+                    <select class="form-control" id="numOfAgents" ng-model="formData.numOfAgents" required>
+                      <option>1-5</option>
+                      <option>5-10</option>
+                      <option>10-15</option>
+                      <option>15+</option>
+                    </select>
+
                 </div>
                 <div class="form-group">
                     <label for="eventDescription">Description of Incident</label>
