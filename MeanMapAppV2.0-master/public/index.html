@@ -11,10 +11,6 @@
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="style.css"/>
 
-    <!-- Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCd2M8Nakb8Zor550siAxZ3Xo6Yx0sAwI8&callback=initMap"
-    async defer></script>
-
     <!-- JS Source -->
     <script src="../bower_components/jquery/dist/jquery.js"></script>
     <script src="../bower_components/angular/angular.js"></script>
@@ -27,6 +23,7 @@
     <script src="js/addCtrl.js"></script>
     <script src="js/queryCtrl.js"></script>
     <script src="js/headerCtrl.js"></script>
+    <script src="js/tipsCtrl.js"></script>
 </head>
 
 <body>
@@ -51,48 +48,6 @@
     <!-- Map and Side Panel -->
     <div class="row content">
 
-        <!-- Google Map -->
-        <div class="col-md-7">
-        <div id="map"></div>
-        </div>
-    <script>
-      var map;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 8
-        });
-        infoWindow = new google.maps.InfoWindow;
-
-        // Try HTML5 geolocation.
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
-            infoWindow.open(map);
-            map.setCenter(pos);
-          }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-          });
-        } else {
-          // Browser doesn't support Geolocation
-          handleLocationError(false, infoWindow, map.getCenter());
-        }
-      }
-
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
-        infoWindow.open(map);
-      }
-    </script>
 
 
         <!-- Side Panel (Controlled by ng-view) -->
@@ -109,5 +64,7 @@
 
 </div>
 
+  <!-- Google Maps API -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCd2M8Nakb8Zor550siAxZ3Xo6Yx0sAwI8" async defer></script>
 </body>
 </html>
