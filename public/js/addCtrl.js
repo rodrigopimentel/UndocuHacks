@@ -4,7 +4,13 @@ addCtrl.controller('addCtrl', function($scope, $http, $rootScope, geolocation, g
 
     // Initializes Variables
     // ----------------------------------------------------------------------------
-    $scope.formData = {};
+    $scope.formData = { // default values
+      incident: 'raid',
+      numOfAgents: '1-10',
+      eventDescription: "very bad",
+      detained: "Yes",
+      numOfDetainees: 3,
+    };
     var coords = {};
     var lat = 0;
     var long = 0;
