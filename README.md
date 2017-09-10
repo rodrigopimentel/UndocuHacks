@@ -30,6 +30,13 @@ Run the following in the directory of the cloned repository
 
   npm install
 
+## Known issues
+
+MongoDB may exit with an exception. Execute the following commands if you encounter any issues.
+
+  sudo mkdir -p /data/db
+  sudo chown -r $USER /data/db
+
 ## Start it up!
 
 1) Launch MongoDB
