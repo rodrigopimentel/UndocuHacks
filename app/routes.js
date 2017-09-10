@@ -47,14 +47,14 @@ module.exports = function(app) {
         // Grab all of the query parameters from the body.
         var lat             = req.body.latitude;
         var long            = req.body.longitude;
-        var distance        = req.body.distance;
+        /*var distance        = req.body.distance;
         var male            = req.body.male;
         var female          = req.body.female;
         var other           = req.body.other;
         var minAge          = req.body.minAge;
         var maxAge          = req.body.maxAge;
         var favLang         = req.body.favlang;
-        var reqVerified     = req.body.reqVerified;
+        var reqVerified     = req.body.reqVerified;*/
 
         // Opens a generic Mongoose Query. Depending on the post body we will...
         var query = User.find({});

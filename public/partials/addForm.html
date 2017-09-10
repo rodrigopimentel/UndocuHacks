@@ -43,11 +43,10 @@
                     <!-- <label for="numOfAgents">Number of Agents</label>
                     <input type="number" class="form-control" id="numOfAgents" placeholder="3" ng-model="formData.numOfAgents" required> -->
                     <label for="numOfAgents">Number of Agents</label>
-                    <select class="form-control" id="numOfAgents" ng-model="formData.numOfAgents" required>
-                      <option>1-5</option>
-                      <option>5-10</option>
-                      <option>10-15</option>
-                      <option>15+</option>
+                    <select class="form-control" input type="text" id="numOfAgents" ng-model="formData.numOfAgents" required>
+                      <option>1-10</option>
+                      <option>10-20</option>
+                      <option>20+</option>
                     </select>
 
                 </div>
@@ -61,7 +60,7 @@
                         <input type="radio" name="detainedRadios" id="yesDetained" value="Yes" ng-model="formData.detained">
                         Yes
                     </label>
-                    <input type="number" class="form-control" id="numOfDetainees" placeholder="How Many?" ng-model="formData.detained" required>
+                    <input type="text" class="form-control" id="numOfDetainees" placeholder="How Many?" ng-model="formData.numberOfDetained">
                 </div>
                 <div class="radio" required>
                     <label>
@@ -83,6 +82,8 @@
                     <label for="verified">HTML5 Verified Location? <span><button ng-click="refreshLoc()" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-refresh"></span></button></span></label>
                     <input type="text" class="form-control" id="verified" placeholder= "Nope (Thanks for spamming my map...)" ng-model="formData.htmlverified" readonly>
                 </div>
+                <center><div class="g-recaptcha" data-sitekey="6LdlFzAUAAAAAFvwmutSTT0M95Ov8eSFvOKWmEed"></div></center>
+
 
                 <!-- Submit button. Note that its tied to createUser() function from addCtrl. Also note ng-disabled logic which prevents early submits.  -->
                 <button type="submit" class="btn btn-danger btn-block" ng-click="createUser()" ng-disabled="addForm.$invalid">Submit</button>
@@ -97,7 +98,7 @@
   function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: -34.397, lng: 150.644},
-      zoom: 8
+      zoom: 17
     });
     infoWindow = new google.maps.InfoWindow;
 
