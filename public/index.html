@@ -16,6 +16,8 @@
     <script src="../bower_components/angular/angular.js"></script>
     <script src="../bower_components/angular-route/angular-route.js"></script>
     <script src="../bower_components/angularjs-geolocation/dist/angularjs-geolocation.min.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+
 
     <!-- Angular Files -->
     <script src="js/app.js"></script>
@@ -37,6 +39,13 @@
         <!-- Header items are made active upon selection -->
         <ul class="nav nav-pills pull-right">
              <li ng-class="{ active: isActive('/tips')}"><a href="/#/tips">Tips</a></li>
+             <li ng-class="{active:isActive('/ally')}"><a href="/#/ally">Become a verifier</a></li>
+             <li ng-class="{active:isActive('/es')}"><a href="/#/es">Español</a></li>
+             <li ng-class="{active:isActive('/kor')}"><a href="/#/kor">한국어</a></li>
+
+
+
+
         </ul>
 
         <!-- Header Title -->
