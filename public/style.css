@@ -12,7 +12,7 @@
 /* Space out content a bit */
 body {
     padding-bottom: 20px;
-    background-color: #bdbdbd !important;
+    background-color: #e4e4e4 !important;
 }
 nav ul a {
   color: #000 !important;
@@ -30,7 +30,7 @@ a {
 
 /* Custom page header */
 .header {
-    border-bottom: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 nav {
