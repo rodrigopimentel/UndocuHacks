@@ -1,135 +1,135 @@
 <!-- Google Map -->
 <div class="col-md-7">
-<div id="map"></div>
+  <div id="map"></div>
 </div>
 <!-- "Join Team" (Post) Form -->
 <div class="col-md-5">
 
-    <!-- Creates Main Panel -->
-    <div class="panel panel-default">
+  <!-- Creates Main Panel -->
+  <div class="panel panel-default">
 
-        <!-- Panel Title -->
-        <div class="panel-heading">
-            <h2 class="panel-title text-center">Get rid of Fear!<span class="glyphicon glyphicon-map-marker"></span></h2>
-        </div>
-
-        <!-- Panel Body -->
-        <div class="panel-body">
-
-            <!-- Creates Form (novalidate disables HTML validation, Angular will control) -->
-            <form name ="addForm" novalidate>
-
-                <!-- Text Boxes and Other User Inputs. Note ng-model binds the values to Angular $scope -->
-                <label class="radio control-label">Type of Incident</label>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="raidRadio" id="raid" value="raid" ng-model="formData.incident">
-                        Raid
-                    </label>
-                </div>
-                <div class="radio" required>
-                    <label>
-                        <input type="radio" name="trafficStopRadio" id="trafficStop" value="trafficStop" ng-model="formData.incident">
-                        Traffic Stop
-                    </label>
-                </div>
-                <div class="radio" required>
-                    <label>
-                        <input type="radio" name="checkpointRadio" id="checkpoint" value="checkpoint" ng-model="formData.incident">
-                        Checkpoint Stop
-                    </label>
-                </div>
-                <div class="form-group">
-                    <!-- <label for="numOfAgents">Number of Agents</label>
-                    <input type="number" class="form-control" id="numOfAgents" placeholder="3" ng-model="formData.numOfAgents" required> -->
-                    <label for="numOfAgents">Number of Agents</label>
-                    <select class="form-control" input type="text" id="numOfAgents" ng-model="formData.numOfAgents" required>
-                      <option>1-10</option>
-                      <option>10-20</option>
-                      <option>20+</option>
-                    </select>
-
-                </div>
-                <div class="form-group">
-                    <label for="eventDescription">Description of Incident</label>
-                    <input type="text" class="form-control" id="eventDescription" placeholder="Green Ice Uniforms, Unmarked Cars, etc." ng-model="formData.eventDescription" required>
-                </div>
-                <label class="radio control-label">Any Detained?</label>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="detainedRadios" id="yesDetained" value="Yes" ng-model="formData.detained">
-                        Yes
-                    </label>
-                    <input type="text" class="form-control" id="numOfDetainees" placeholder="How Many?" ng-model="formData.numberOfDetained">
-                </div>
-                <div class="radio" required>
-                    <label>
-                        <input type="radio" name="detainedRadios" id="noDetained" value="No" ng-model="formData.detained">
-                        No
-                    </label>
-                </div>
-
-                <div class="form-group">
-                    <label for="latitude">Latitude</label>
-                    <input type="text" class="form-control" id="latitude" value="39.500" ng-model="formData.latitude" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="longitude">Longitude</label>
-                    <input type="text" class="form-control" id="longitude" value="-98.350" ng-model="formData.longitude" readonly>
-                </div>
-                <div class="form-group">
-                    <!-- Note RefreshLoc button tied to addCtrl. This requests a refresh of the HTML5 verified location. -->
-                    <label for="verified">HTML5 Verified Location? <span><button ng-click="refreshLoc()" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-refresh"></span></button></span></label>
-                    <input type="text" class="form-control" id="verified" placeholder= "Nope (Thanks for spamming my map...)" ng-model="formData.htmlverified" readonly>
-                </div>
-                <center><div class="g-recaptcha" data-sitekey="6LdlFzAUAAAAAFvwmutSTT0M95Ov8eSFvOKWmEed"></div></center>
-
-
-                <!-- Submit button. Note that its tied to createUser() function from addCtrl. Also note ng-disabled logic which prevents early submits.  -->
-                <button type="submit" class="btn btn-danger btn-block" ng-click="createUser()" ng-disabled="addForm.$invalid">Submit</button>
-            </form>
-        </div>
+    <!-- Panel Title -->
+    <div class="panel-heading">
+      <h2 class="panel-title text-center">Get rid of Fear!<span class="glyphicon glyphicon-map-marker"></span></h2>
     </div>
+
+    <!-- Panel Body -->
+    <div class="panel-body">
+
+      <!-- Creates Form (novalidate disables HTML validation, Angular will control) -->
+      <form name ="addForm" novalidate>
+
+        <!-- Text Boxes and Other Report Inputs. Note ng-model binds the values to Angular $scope -->
+        <label class="radio control-label">Type of Incident</label>
+        <div class="radio">
+          <label>
+            <input type="radio" name="raidRadio" id="raid" value="raid" ng-model="formData.incident">
+            Raid
+          </label>
+        </div>
+        <div class="radio" required>
+          <label>
+            <input type="radio" name="trafficStopRadio" id="trafficStop" value="trafficStop" ng-model="formData.incident">
+            Traffic Stop
+          </label>
+        </div>
+        <div class="radio" required>
+          <label>
+            <input type="radio" name="checkpointRadio" id="checkpoint" value="checkpoint" ng-model="formData.incident">
+            Checkpoint Stop
+          </label>
+        </div>
+        <div class="form-group">
+          <!-- <label for="numOfAgents">Number of Agents</label>
+          <input type="number" class="form-control" id="numOfAgents" placeholder="3" ng-model="formData.numOfAgents" required> -->
+          <label for="numOfAgents">Number of Agents</label>
+          <select class="form-control" input type="text" id="numOfAgents" ng-model="formData.numOfAgents" required>
+            <option value="1-10">1-10</option>
+            <option value="10-20">10-20</option>
+            <option value="20+">20+</option>
+          </select>
+
+        </div>
+        <div class="form-group">
+          <label for="eventDescription">Description of Incident</label>
+          <input type="text" class="form-control" id="eventDescription" placeholder="Green Ice Uniforms, Unmarked Cars, etc." ng-model="formData.eventDescription" required>
+        </div>
+        <label class="radio control-label">Any Detained?</label>
+        <div class="radio">
+          <label>
+            <input type="radio" name="detainedRadios" id="yesDetained" value="Yes" ng-model="formData.detained">
+            Yes
+          </label>
+          <input type="text" class="form-control" id="numOfDetainees" placeholder="How Many?" ng-model="formData.numberOfDetained">
+        </div>
+        <div class="radio" required>
+          <label>
+            <input type="radio" name="detainedRadios" id="noDetained" value="No" ng-model="formData.detained">
+            No
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label for="latitude">Latitude</label>
+          <input type="text" class="form-control" id="latitude" value="39.500" ng-model="formData.latitude" readonly>
+        </div>
+        <div class="form-group">
+          <label for="longitude">Longitude</label>
+          <input type="text" class="form-control" id="longitude" value="-98.350" ng-model="formData.longitude" readonly>
+        </div>
+        <div class="form-group">
+          <!-- Note RefreshLoc button tied to addCtrl. This requests a refresh of the HTML5 verified location. -->
+          <label for="verified">HTML5 Verified Location? <span><button ng-click="refreshLoc()" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-refresh"></span></button></span></label>
+          <input type="text" class="form-control" id="verified" placeholder= "Nope (Thanks for spamming my map...)" ng-model="formData.htmlverified" readonly>
+        </div>
+        <center><div class="g-recaptcha" data-sitekey="6LdlFzAUAAAAAFvwmutSTT0M95Ov8eSFvOKWmEed"></div></center>
+
+
+        <!-- Submit button. Note that its tied to createReport() function from addCtrl. Also note ng-disabled logic which prevents early submits.  -->
+        <button type="submit" class="btn btn-danger btn-block" ng-click="createReport()" ng-disabled="addForm.$invalid">Submit</button>
+      </form>
+    </div>
+  </div>
 </div>
 
 <!-- Google Maps API -->
 <script>
   var map;
-  function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: -34.397, lng: 150.644},
-      zoom: 17
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: -34.397, lng: 150.644},
+    zoom: 17
+  });
+  infoWindow = new google.maps.InfoWindow;
+
+  // Try HTML5 geolocation.
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+
+      infoWindow.setPosition(pos);
+      infoWindow.setContent('Location found.');
+      infoWindow.open(map);
+      map.setCenter(pos);
+    }, function() {
+      handleLocationError(true, infoWindow, map.getCenter());
     });
-    infoWindow = new google.maps.InfoWindow;
-
-    // Try HTML5 geolocation.
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        var pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-
-        infoWindow.setPosition(pos);
-        infoWindow.setContent('Location found.');
-        infoWindow.open(map);
-        map.setCenter(pos);
-      }, function() {
-        handleLocationError(true, infoWindow, map.getCenter());
-      });
-    } else {
-      // Browser doesn't support Geolocation
-      handleLocationError(false, infoWindow, map.getCenter());
-    }
+  } else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
   }
+}
 
-  function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(browserHasGeolocation ?
-                          'Error: The Geolocation service failed.' :
-                          'Error: Your browser doesn\'t support geolocation.');
-    infoWindow.open(map);
-  }
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(browserHasGeolocation ?
+    'Error: The Geolocation service failed.' :
+    'Error: Your browser doesn\'t support geolocation.');
+  infoWindow.open(map);
+}
 
-  initMap();
+initMap();
 </script>

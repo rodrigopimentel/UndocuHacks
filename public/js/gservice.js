@@ -35,7 +35,7 @@ angular.module('gservice', [])
             selectedLong = longitude;
 
             // Perform an AJAX call to get all of the records in the db.
-            $http.get('/users').success(function(response){
+            $http.get('/reports').success(function(response){
 
                 // Convert the results into Google Map Format
                 locations = convertToMapPoints(response);
@@ -47,7 +47,7 @@ angular.module('gservice', [])
 
         // Private Inner Functions
         // --------------------------------------------------------------
-        // Convert a JSON of users into map points
+        // Convert a JSON of reports into map points
         var convertToMapPoints = function(response){
 
             // Clear the locations holder
@@ -55,29 +55,29 @@ angular.module('gservice', [])
 
             // Loop through all of the JSON entries provided in the response
             for(var i= 0; i < response.length; i++) {
-                var user = response[i];
+                var report = response[i];
 
                 // Create popup windows for each record
                 var  contentString =
-                    '<p><b>Incident</b>: ' + user.incident +
-                    '<br><b>Number of Agents: </b>: ' + user.numOfAgents +
-                    '<br><b>Event Description: </b>: ' + user.eventDescription +
-                    '<br><b>People Detained: </b>: ' + user.detained +
-                    '<br><b>Number of Detained: </b>: ' + (user.numberOfDetained || '0') +
+                    '<p><b>Incident</b>: ' + report.incident +
+                    '<br><b>Number of Agents: </b>: ' + report.numOfAgents +
+                    '<br><b>Event Description: </b>: ' + report.eventDescription +
+                    '<br><b>People Detained: </b>: ' + report.detained +
+                    '<br><b>Number of Detained: </b>: ' + (report.numberOfDetained || '0') +
                     '</p>';
 
                 // Converts each of the JSON records into Google Maps Location format (Note [Lat, Lng] format).
                 locations.push({
-                    latlon: new google.maps.LatLng(user.location[1], user.location[0]),
+                    latlon: new google.maps.LatLng(report.location[1], report.location[0]),
                     message: new google.maps.InfoWindow({
                         content: contentString,
                         maxWidth: 320
                     }),
-                    incident: user.incident,
-                    numOfAgents: user.numOfAgents,
-                    eventDescription: user.eventDescription,
-                    detained: user.detained,
-                    numberOfDetained: user.numberOfDetained
+                    incident: report.incident,
+                    numOfAgents: report.numOfAgents,
+                    eventDescription: report.eventDescription,
+                    detained: report.detained,
+                    numberOfDetained: report.numberOfDetained
 
             });
         }
