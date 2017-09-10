@@ -3,7 +3,7 @@
 <html class="no-js" ng-app="meanMapApp">
 <head>
     <meta charset="utf-8">
-    <title>MigraTrack</title>
+    <title>People's Justice | Tracking ICE and CBP</title>
     <meta name="description" content="Description Pending">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Google Maps API -->
@@ -11,6 +11,13 @@
     <!-- CSS -->
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="style.css"/>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
 
     <!-- JS Source -->
     <script src="../bower_components/jquery/dist/jquery.js"></script>
@@ -33,38 +40,30 @@
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<div class="container">
+<div class="main-container">
     <!-- Header Menu. Note use of headerCtrl -->
-    <div class="header" ng-controller="headerCtrl">
-
-        <!-- Header items are made active upon selection -->
-        <ul class="nav nav-pills pull-right">
-             <li ng-class="{ active: isActive('/tips')}"><a href="/#/tips">Tips</a></li>
-             <li ng-class="{active:isActive('/ally')}"><a href="/#/ally">Become a verifier</a></li>
-             <li ng-class="{active:isActive('/es')}"><a href="/#/es">Español</a></li>
-             <li ng-class="{active:isActive('/kor')}"><a href="/#/kor">한국어</a></li>
-
-
-
-
-        </ul>
-
-        <!-- Header Title -->
-        <h3>
-          <a href="/#/" class="text-muted">MigraTrack</a>
-        </h3>
+    <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">People's Justice</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/#/tips">Tips</a></li>
+        <li><a href="/#/ally">Verifier</a></li>
+        <li><a href="/#/es">Español</a></li>
+        <li><a href="/#/kor">한국어</a></li>
+      </ul>
     </div>
+  </nav>
 
+    <div class="container">
     <!-- Map and Side Panel -->
     <div class="row content">
-
-
 
         <!-- Side Panel (Controlled by ng-view) -->
         <div ng-view></div>
 
     </div>
     <hr/>
+  </div>
 
     <!-- Footer -->
     <div class="footer">
