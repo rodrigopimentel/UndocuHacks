@@ -14,7 +14,7 @@ module.exports = function(app) {
     // Uses Mongoose schema to run the search (empty conditions)
     var query = Report.find({
       lastUpvote: {
-        $gt: new Date(Date.now() - 10800000)
+        $gt: new Date(Date.now() - 10800000) // 3 hours
       }
     });
     query.exec(function(err, reports){

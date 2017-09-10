@@ -47,7 +47,7 @@ angular.module('gservice', [])
 
     window.upvote = function(reportId) {
       $http.post('/reports/' + reportId + '/renew').success(function(response) {
-        console.log(response);
+        localStorage.setItem(reportId, new Date().getTime());
       }).error(function(e) { console.error(e); });
     };
 
@@ -63,6 +63,9 @@ angular.module('gservice', [])
       for(var i= 0; i < response.length; i++) {
         var report = response[i];
 
+        var lastUpvote = localStorage.getItem(report._id);
+        var disabled = lastUpvote && new Date() < new Date(parseInt(lastUpvote) + 10800000)
+
         // Create popup windows for each record
         var contentString =
           '<p><b>Incident</b>: ' + report.incident +
@@ -70,7 +73,7 @@ angular.module('gservice', [])
           '<br><b>Event Description: </b>: ' + report.eventDescription +
           '<br><b>People Detained: </b>: ' + report.detained +
           '<br><b>Number of Detained: </b>: ' + (report.numberOfDetained || '0') +
-          '<br><button onclick="upvote(\'' + report._id + '\')" class="btn btn-danger btn-block" style="margin-top: 8px">Verify</button>'
+          '<br><button onclick="this.disabled = true; upvote(\'' + report._id + '\')" class="btn btn-danger btn-block" style="margin-top: 8px"' + (disabled ? ' disabled' : '') + '>Verify</button>'
         '</p>';
 
         // Converts each of the JSON records into Google Maps Location format (Note [Lat, Lng] format).
