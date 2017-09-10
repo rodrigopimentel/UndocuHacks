@@ -5,9 +5,12 @@
     padding: 0.2em 0;
 }
 
+.container {
+  padding-top: 10px;
+}
+
 /* Space out content a bit */
 body {
-    padding-top: 20px;
     padding-bottom: 20px;
 }
 
@@ -22,6 +25,11 @@ body {
 /* Custom page header */
 .header {
     border-bottom: 1px solid #e5e5e5;
+}
+
+nav {
+  padding-left: 15%;
+  padding-right: 15%;
 }
 
 /* Make the masthead heading the same height as the navigation */
@@ -67,7 +75,7 @@ body {
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
     .container {
-        max-width: 1120px;
+        /* max-width: 1120px; */
     }
 
     /* Remove the padding we set earlier */
