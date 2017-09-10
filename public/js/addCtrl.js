@@ -61,10 +61,11 @@ addCtrl.controller('addCtrl', function($scope, $http, $rootScope, geolocation, g
 
         // Grabs all of the text box fields
         var userData = {
-            username: $scope.formData.username,
-            gender: $scope.formData.gender,
-            age: $scope.formData.age,
-            favlang: $scope.formData.favlang,
+            incident: $scope.formData.incident,
+            numOfAgents: $scope.formData.numOfAgents,
+            eventDescription: $scope.formData.eventDescription,
+            detained: $scope.formData.detained,
+            numberOfDetained: $scope.formData.numberOfDetained,
             location: [$scope.formData.longitude, $scope.formData.latitude],
             htmlverified: $scope.formData.htmlverified
         };
@@ -74,10 +75,10 @@ addCtrl.controller('addCtrl', function($scope, $http, $rootScope, geolocation, g
             .success(function (data) {
 
                 // Once complete, clear the form (except location)
-                $scope.formData.username = "";
-                $scope.formData.gender = "";
-                $scope.formData.age = "";
-                $scope.formData.favlang = "";
+                $scope.formData.incident = "";
+                $scope.formData.numOfAgents = "";
+                $scope.formData.eventDescription = "";
+                $scope.formData.detained = "";
 
                 // Refresh the map with new data
                 gservice.refresh($scope.formData.latitude, $scope.formData.longitude);
@@ -87,4 +88,3 @@ addCtrl.controller('addCtrl', function($scope, $http, $rootScope, geolocation, g
             });
     };
 });
-
