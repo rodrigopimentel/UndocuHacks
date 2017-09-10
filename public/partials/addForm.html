@@ -10,7 +10,7 @@
 
     <!-- Panel Title -->
     <div class="panel-heading">
-      <h2 class="panel-title text-center">Get rid of Fear!<span class="glyphicon glyphicon-map-marker"></span></h2>
+      <h2 class="panel-title text-center">Report an Attack <span class="glyphicon glyphicon-eye-open"></span></h2>
     </div>
 
     <!-- Panel Body -->
@@ -57,26 +57,24 @@
         <label class="radio control-label">Any Detained?</label>
         <div class="radio">
           <label>
-            <input type="radio" name="detainedRadios" id="yesDetained" value="Yes" ng-model="formData.detained">
-            Yes
+            <input type="radio" name="detainedRadios" id="yesDetained" value="yesDetained" ng-model="formData.detained">
+            <label for="yesDetained">Yes</label>
           </label>
           <input type="text" class="form-control" id="numOfDetainees" placeholder="How Many?" ng-model="formData.numberOfDetained">
         </div>
         <div class="radio" required>
           <label>
-            <input type="radio" name="detainedRadios" id="noDetained" value="No" ng-model="formData.detained">
-            No
+            <input type="radio" name="detainedRadios" id="noDetained" value="noDetained" ng-model="formData.detained">
+            <label for="noDetained">No</label>
           </label>
         </div>
 
         <div class="form-group">
-          <label for="latitude">Latitude</label>
+          <label for="latitude">Latitude & Longitude</label>
           <input type="text" class="form-control" id="latitude" value="39.500" ng-model="formData.latitude" readonly>
-        </div>
-        <div class="form-group">
-          <label for="longitude">Longitude</label>
           <input type="text" class="form-control" id="longitude" value="-98.350" ng-model="formData.longitude" readonly>
         </div>
+
         <center><div class="g-recaptcha" data-sitekey="6LdlFzAUAAAAAFvwmutSTT0M95Ov8eSFvOKWmEed"></div></center>
 
 
@@ -92,11 +90,8 @@
   var map;
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
-    center: {
-      lat: -34.397,
-      lng: 150.644,
-    },
-    zoom: 17
+    center: {lat: 34.0127624, lng: -118.3698837},
+    zoom: 11
   });
   infoWindow = new google.maps.InfoWindow;
 

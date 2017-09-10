@@ -4,20 +4,14 @@ addCtrl.controller('addCtrl', function($scope, $http, $rootScope, geolocation, g
 
   // Initializes Variables
   // ----------------------------------------------------------------------------
-  $scope.formData = {
-    incident: 'raid',
-    numOfAgents: '1-10',
-    numberOfDetained: 3,
-    eventDescription: "very bad",
-    detained: "Yes",
-  };
+  $scope.formData = {};
   var coords = {};
   var lat = 0;
   var long = 0;
 
   // Set initial coordinates to the center of the US
-  $scope.formData.longitude = -98.350;
-  $scope.formData.latitude = 39.500;
+  $scope.formData.longitude = -118.3698837;
+  $scope.formData.latitude = 34.0127624;
 
   // Get Report's actual coordinates based on HTML5 at window load
   geolocation.getLocation().then(function(data){

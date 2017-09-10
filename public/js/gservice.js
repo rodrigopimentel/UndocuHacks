@@ -1,98 +1,98 @@
 // Creates the gservice factory. This will be the primary means by which we interact with Google Maps
 angular.module('gservice', [])
-  .factory('gservice', function($rootScope, $http){
+    .factory('gservice', function($rootScope, $http){
 
-    // Initialize Variables
-    // -------------------------------------------------------------
-    // Service our factory will return
-    var googleMapService = {};
+        window.upvote = function(reportId) {
+          $http.post('/reports/' + reportId + '/renew').success(function(response) {
+            localStorage.setItem(reportId, new Date().getTime());
+          }).error(function(e) { console.error(e); });
+        };
 
-    // Array of locations obtained from API calls
-    var locations = [];
+        // Initialize Variables
+        // -------------------------------------------------------------
+        // Service our factory will return
+        var googleMapService = {};
 
-    // Variables we'll use to help us pan to the right spot
-    var lastMarker;
-    var currentSelectedMarker;
+        // Array of locations obtained from API calls
+        var locations = [];
 
-    // Selected Location (initialize to center of America)
-    var selectedLat = 39.50;
-    var selectedLong = -98.35;
+        // Variables we'll use to help us pan to the right spot
+        var lastMarker;
+        var currentSelectedMarker;
 
-    // Handling Clicks and location selection
-    googleMapService.clickLat  = 0;
-    googleMapService.clickLong = 0;
+        // Selected Location (initialize to center of America)
+        var selectedLat = 34.0127624;
+        var selectedLong = -118.3698837;
 
-    // Functions
-    // --------------------------------------------------------------
-    // Refresh the Map with new data. Function will take new latitude and longitude coordinates.
-    googleMapService.refresh = function(latitude, longitude){
+        // Handling Clicks and location selection
+        googleMapService.clickLat  = 0;
+        googleMapService.clickLong = 0;
 
-      // Clears the holding array of locations
-      locations = [];
+        // Functions
+        // --------------------------------------------------------------
+        // Refresh the Map with new data. Function will take new latitude and longitude coordinates.
+        googleMapService.refresh = function(latitude, longitude){
 
-      // Set the selected lat and long equal to the ones provided on the refresh() call
-      selectedLat = latitude;
-      selectedLong = longitude;
+            // Clears the holding array of locations
+            locations = [];
 
-      // Perform an AJAX call to get all of the records in the db.
-      $http.get('/reports').success(function(response){
+            // Set the selected lat and long equal to the ones provided on the refresh() call
+            selectedLat = latitude;
+            selectedLong = longitude;
 
-        // Convert the results into Google Map Format
-        locations = convertToMapPoints(response);
+            // Perform an AJAX call to get all of the records in the db.
+            $http.get('/reports').success(function(response){
 
-        // Then initialize the map.
-        initialize(latitude, longitude);
-      }).error(function(){});
-    };
+                // Convert the results into Google Map Format
+                locations = convertToMapPoints(response);
 
-    window.upvote = function(reportId) {
-      $http.post('/reports/' + reportId + '/renew').success(function(response) {
-        localStorage.setItem(reportId, new Date().getTime());
-      }).error(function(e) { console.error(e); });
-    };
+                // Then initialize the map.
+                initialize(latitude, longitude);
+            }).error(function(){});
+        };
 
-    // Private Inner Functions
-    // --------------------------------------------------------------
-    // Convert a JSON of reports into map points
-    var convertToMapPoints = function(response){
+        // Private Inner Functions
+        // --------------------------------------------------------------
+        // Convert a JSON of reports into map points
+        var convertToMapPoints = function(response){
 
-      // Clear the locations holder
-      var locations = [];
+            // Clear the locations holder
+            var locations = [];
 
-      // Loop through all of the JSON entries provided in the response
-      for(var i= 0; i < response.length; i++) {
-        var report = response[i];
+            // Loop through all of the JSON entries provided in the response
+            for(var i= 0; i < response.length; i++) {
+                var report = response[i];
 
-        var lastUpvote = localStorage.getItem(report._id);
-        var disabled = lastUpvote && new Date() < new Date(parseInt(lastUpvote) + 10800000)
+                var lastUpvote = localStorage.getItem(report._id);
+                var disabled = lastUpvote && new Date() < new Date(parseInt(lastUpvote) + 10800000)
 
-        // Create popup windows for each record
-        var contentString =
-          '<p><b>Incident</b>: ' + report.incident +
-          '<br><b>Number of Agents: </b>: ' + report.numOfAgents +
-          '<br><b>Event Description: </b>: ' + report.eventDescription +
-          '<br><b>People Detained: </b>: ' + report.detained +
-          '<br><b>Number of Detained: </b>: ' + (report.numberOfDetained || '0') +
-          '<br><button onclick="this.disabled = true; upvote(\'' + report._id + '\')" class="btn btn-danger btn-block" style="margin-top: 8px"' + (disabled ? ' disabled' : '') + '>Verify</button>'
-        '</p>';
+                // Create popup windows for each record
+                var  contentString =
+                    '<p><b>Incident</b>: ' + report.incident +
+                    '<br><b>Number of Agents: </b>: ' + report.numOfAgents +
+                    '<br><b>Event Description: </b>: ' + report.eventDescription +
+                    '<br><b>People Detained: </b>: ' + report.detained +
+                    '<br><b>Number of Detained: </b>: ' + (report.numberOfDetained || '0') +
+                    '<br><button onclick="this.disabled = true; upvote(\'' + report._id + '\')" class="btn btn-danger btn-block" style="margin-top: 8px"' + (disabled ? ' disabled' : '') + '>Verify</button>'
+                    '</p>';
 
-        // Converts each of the JSON records into Google Maps Location format (Note [Lat, Lng] format).
-        locations.push({
-          latlon: new google.maps.LatLng(report.location[1], report.location[0]),
-          message: new google.maps.InfoWindow({
-            content: contentString,
-            maxWidth: 320
-          }),
-          incident: report.incident,
-          numOfAgents: report.numOfAgents,
-          eventDescription: report.eventDescription,
-          detained: report.detained,
-          numberOfDetained: report.numberOfDetained
+                // Converts each of the JSON records into Google Maps Location format (Note [Lat, Lng] format).
+                locations.push({
+                    latlon: new google.maps.LatLng(report.location[1], report.location[0]),
+                    message: new google.maps.InfoWindow({
+                        content: contentString,
+                        maxWidth: 400
+                    }),
+                    incident: report.incident,
+                    numOfAgents: report.numOfAgents,
+                    eventDescription: report.eventDescription,
+                    detained: report.detained,
+                    numberOfDetained: report.numberOfDetained
 
-        });
-      }
-      // location is now an array populated with records in Google Maps format
-      return locations;
+            });
+        }
+        // location is now an array populated with records in Google Maps format
+        return locations;
     };
 
     // Initializes the map
@@ -106,18 +106,18 @@ angular.module('gservice', [])
 
         // Create a new map and place in the index.html page
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 3,
-          center: myLatLng
+            zoom: 10,
+            center: myLatLng
         });
       }
 
       // Loop through each location in the array and place a marker
       locations.forEach(function(n, i){
         var marker = new google.maps.Marker({
-          position: n.latlon,
-          map: map,
-          title: "Big Map",
-          icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+            position: n.latlon,
+            map: map,
+            title: "Justice Watch Map",
+            icon: "http://labs.google.com/ridefinder/images/mm_20_black.png",
         });
 
         // For each marker created, add a listener that checks for clicks

@@ -12,8 +12,14 @@
 /* Space out content a bit */
 body {
     padding-bottom: 20px;
+    background-color: #bdbdbd !important;
 }
-
+nav ul a {
+  color: #000 !important;
+}
+a {
+  color: #000 !important;
+}
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .content,
@@ -68,10 +74,32 @@ nav {
 
 /* Google Map! */
 #map {
-    height: 645px;
-    width: 645px;
+  height: 645px;
+  width: 512px;;
 }
 
+label{
+  font-size: 1rem !important;
+  color: #2f2d2d !important;
+}
+.panel-body{
+  padding-top: 5px !important;
+}
+input[readonly]
+{
+    border-bottom: none !important;
+    margin: none !important;
+    height: 15px !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+.brand-logo img {
+    max-height: 64px !important;
+}
+nav{
+  color: #000 !important;
+  background-color: #fff !important;
+}
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
     .container {
