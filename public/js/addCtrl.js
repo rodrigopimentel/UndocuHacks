@@ -4,13 +4,7 @@ addCtrl.controller('addCtrl', function($scope, $http, $rootScope, geolocation, g
 
     // Initializes Variables
     // ----------------------------------------------------------------------------
-    $scope.formData = { // default values
-      incident: 'raid',
-      numOfAgents: '1-10',
-      eventDescription: "very bad",
-      detained: "Yes",
-      numOfDetainees: 3,
-    };
+    $scope.formData = {};
     var coords = {};
     var lat = 0;
     var long = 0;
@@ -50,18 +44,6 @@ addCtrl.controller('addCtrl', function($scope, $http, $rootScope, geolocation, g
         });
     });
 
-    // Function for refreshing the HTML5 verified location (used by refresh button)
-    $scope.refreshLoc = function(){
-        geolocation.getLocation().then(function(data){
-            coords = {lat:data.coords.latitude, long:data.coords.longitude};
-
-            $scope.formData.longitude = parseFloat(coords.long).toFixed(3);
-            $scope.formData.latitude = parseFloat(coords.lat).toFixed(3);
-            $scope.formData.htmlverified = "Yep (Thanks for giving us real data!)";
-            gservice.refresh(coords.lat, coords.long);
-        });
-    };
-
     // Creates a new user based on the form fields
     $scope.createUser = function() {
 
@@ -75,6 +57,7 @@ addCtrl.controller('addCtrl', function($scope, $http, $rootScope, geolocation, g
             location: [$scope.formData.longitude, $scope.formData.latitude],
             htmlverified: $scope.formData.htmlverified
         };
+    
 
         // Saves the user data to the db
         $http.post('/users', userData)
@@ -85,6 +68,8 @@ addCtrl.controller('addCtrl', function($scope, $http, $rootScope, geolocation, g
                 $scope.formData.numOfAgents = "";
                 $scope.formData.eventDescription = "";
                 $scope.formData.detained = "";
+                $scope.formData.numberOfDetained = "";
+
 
                 // Refresh the map with new data
                 gservice.refresh($scope.formData.latitude, $scope.formData.longitude);

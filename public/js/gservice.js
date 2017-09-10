@@ -6,8 +6,6 @@ angular.module('gservice', [])
         // -------------------------------------------------------------
         // Service our factory will return
         var googleMapService = {};
-        googleMapService.clickLat  = 0;
-        googleMapService.clickLong = 0;
 
         // Array of locations obtained from API calls
         var locations = [];
@@ -16,51 +14,39 @@ angular.module('gservice', [])
         var lastMarker;
         var currentSelectedMarker;
 
-        // User Selected Location (initialize to center of America)
+        // Selected Location (initialize to center of America)
         var selectedLat = 39.50;
         var selectedLong = -98.35;
 
+        // Handling Clicks and location selection
+        googleMapService.clickLat  = 0;
+        googleMapService.clickLong = 0;
+
         // Functions
         // --------------------------------------------------------------
-        // Refresh the Map with new data. Takes three parameters (lat, long, and filtering results)
-        // Refresh the Map with new data. Takes three parameters (lat, long, and filtering results)
-googleMapService.refresh = function(latitude, longitude, filteredResults){
+        // Refresh the Map with new data. Function will take new latitude and longitude coordinates.
+        googleMapService.refresh = function(latitude, longitude){
 
-    // Clears the holding array of locations
-    locations = [];
+            // Clears the holding array of locations
+            locations = [];
 
-    // Set the selected lat and long equal to the ones provided on the refresh() call
-    selectedLat = latitude;
-    selectedLong = longitude;
+            // Set the selected lat and long equal to the ones provided on the refresh() call
+            selectedLat = latitude;
+            selectedLong = longitude;
 
-    // If filtered results are provided in the refresh() call...
-    if (filteredResults){
+            // Perform an AJAX call to get all of the records in the db.
+            $http.get('/users').success(function(response){
 
-        // Then convert the filtered results into map points.
-        locations = convertToMapPoints(filteredResults);
+                // Convert the results into Google Map Format
+                locations = convertToMapPoints(response);
 
-        // Then, initialize the map -- noting that a filter was used (to mark icons yellow)
-        initialize(latitude, longitude, true);
-    }
-
-    // If no filter is provided in the refresh() call...
-    else {
-
-        // Perform an AJAX call to get all of the records in the db.
-        $http.get('/users').success(function(response){
-
-            // Then convert the results into map points
-            locations = convertToMapPoints(response);
-
-            // Then initialize the map -- noting that no filter was used.
-            initialize(latitude, longitude, false);
-        }).error(function(){});
-    }
-};
+                // Then initialize the map.
+                initialize(latitude, longitude);
+            }).error(function(){});
+        };
 
         // Private Inner Functions
         // --------------------------------------------------------------
-
         // Convert a JSON of users into map points
         var convertToMapPoints = function(response){
 
@@ -72,43 +58,40 @@ googleMapService.refresh = function(latitude, longitude, filteredResults){
                 var user = response[i];
 
                 // Create popup windows for each record
-                var  contentString = '<p><b>Username</b>: ' + user.username + '<br><b>Age</b>: ' + user.age + '<br>' +
-                    '<b>Gender</b>: ' + user.gender + '<br><b>Favorite Language</b>: ' + user.favlang + '</p>';
+                var  contentString =
+                    '<p><b>Incident</b>: ' + user.incident +
+                    '<br><b>Number of Agents: </b>: ' + user.numOfAgents +
+                    '<br><b>Event Description: </b>: ' + user.eventDescription +
+                    '<br><b>People Detained: </b>: ' + user.detained +
+                    '<br><b>Number of Detained: </b>: ' + (user.numberOfDetained || '0') +
+                    '</p>';
 
-                // Converts each of the JSON records into Google Maps Location format (Note Lat, Lng format).
-                locations.push(new Location(
-                    new google.maps.LatLng(user.location[1], user.location[0]),
-                    new google.maps.InfoWindow({
+                // Converts each of the JSON records into Google Maps Location format (Note [Lat, Lng] format).
+                locations.push({
+                    latlon: new google.maps.LatLng(user.location[1], user.location[0]),
+                    message: new google.maps.InfoWindow({
                         content: contentString,
                         maxWidth: 320
                     }),
-                    user.username,
-                    user.gender,
-                    user.age,
-                    user.favlang
-                ))
-            }
-            // location is now an array populated with records in Google Maps format
-            return locations;
-        };
+                    incident: user.incident,
+                    numOfAgents: user.numOfAgents,
+                    eventDescription: user.eventDescription,
+                    detained: user.detained,
+                    numberOfDetained: user.numberOfDetained
 
-        // Constructor for generic location
-        var Location = function(latlon, message, username, gender, age, favlang){
-            this.latlon = latlon;
-            this.message = message;
-            this.username = username;
-            this.gender = gender;
-            this.age = age;
-            this.favlang = favlang
-        };
+            });
+        }
+        // location is now an array populated with records in Google Maps format
+        return locations;
+    };
 
-        // Initializes the map
-        var initialize = function(latitude, longitude, filter) {
+// Initializes the map
+var initialize = function(latitude, longitude) {
 
     // Uses the selected lat, long as starting point
     var myLatLng = {lat: selectedLat, lng: selectedLong};
 
-    // If map has not been created...
+    // If map has not been created already...
     if (!map){
 
         // Create a new map and place in the index.html page
@@ -118,21 +101,13 @@ googleMapService.refresh = function(latitude, longitude, filteredResults){
         });
     }
 
-    // If a filter was used set the icons yellow, otherwise blue
-    if(filter){
-        icon = "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
-    }
-    else{
-        icon = "http://maps.google.com/mapfiles/ms/icons/blue-dot.png";
-    }
-
     // Loop through each location in the array and place a marker
     locations.forEach(function(n, i){
         var marker = new google.maps.Marker({
             position: n.latlon,
             map: map,
             title: "Big Map",
-            icon: icon,
+            icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
         });
 
         // For each marker created, add a listener that checks for clicks
@@ -148,7 +123,6 @@ googleMapService.refresh = function(latitude, longitude, filteredResults){
     var initialLocation = new google.maps.LatLng(latitude, longitude);
     var marker = new google.maps.Marker({
         position: initialLocation,
-        animation: google.maps.Animation.BOUNCE,
         map: map,
         icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
     });
@@ -161,7 +135,6 @@ googleMapService.refresh = function(latitude, longitude, filteredResults){
     google.maps.event.addListener(map, 'click', function(e){
         var marker = new google.maps.Marker({
             position: e.latLng,
-            animation: google.maps.Animation.BOUNCE,
             map: map,
             icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
         });
@@ -182,10 +155,9 @@ googleMapService.refresh = function(latitude, longitude, filteredResults){
     });
 };
 
+// Refresh the page upon window load. Use the initial latitude and longitude
+google.maps.event.addDomListener(window, 'load',
+    googleMapService.refresh(selectedLat, selectedLong));
 
-        // Refresh the page upon window load. Use the initial latitude and longitude
-        google.maps.event.addDomListener(window, 'load',
-            googleMapService.refresh(selectedLat, selectedLong));
-
-        return googleMapService;
-    });
+return googleMapService;
+});
