@@ -11,5 +11,8 @@
         "body-parser": "~1.5.2",
         "jsonwebtoken": "^5.0.2",
         "method-override": "~2.1.2"
+    },
+    "scripts": {
+      "start": "nodemon server.js"
     }
 }
